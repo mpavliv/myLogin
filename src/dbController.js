@@ -72,6 +72,32 @@ module.exports = class UsersDB{
         })
     }
 
+    async getAllUsers(){
+        const sql = `SELECT * FROM users`;
+        return new Promise((res, rej) => {
+            this.db.all(sql, function(err, rows) {
+                if(err) {
+                    console.log(err.message);
+                    rej(undefined);
+                }
+                res(rows);
+            })
+        });
+        // return new Promise((resolve, reject) => {
+        //     this.db.get(sql, [userName], (err, row) => {
+        //         if (err) {
+        //             console.log(err);
+        //             reject(true);
+        //         }
+        //         if (row) {
+        //             resolve(true);
+        //         } else {
+        //             resolve(false);
+        //         }
+        //     })
+        // })
+    }
+
 
     async addUser(user){
         const isUser = await this.existsUser(user.userName).then(res => {return res});
